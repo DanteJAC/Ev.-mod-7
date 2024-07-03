@@ -1,5 +1,6 @@
 package com.registro.usuarios.servicio;
 
+import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -44,7 +45,7 @@ public class UsuarioServicioImpl implements UsuarioServicio {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Usuario usuario = usuarioRepositorio.findByEmail(username);
         if (usuario == null) {
-            throw new UsernameNotFoundException("Usuario o contraseña inválidos");
+            throw new UsernameNotFoundException("Usuario no encontrado con email: " + username);
         }
         Collection<? extends GrantedAuthority> authorities = 
                 usuario.getRoles().stream()
@@ -62,5 +63,13 @@ public class UsuarioServicioImpl implements UsuarioServicio {
     @Override
     public Usuario findByEmail(String email) {
         return usuarioRepositorio.findByEmail(email);
+    }
+
+    @Override
+    public BigDecimal getSaldoByUserId(Long userId) {
+        Usuario usuario = usuarioRepositorio.findById(userId)
+                                .orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado con ID: " + userId));
+        
+        return usuario.getCuenta().getSaldo();
     }
 }
