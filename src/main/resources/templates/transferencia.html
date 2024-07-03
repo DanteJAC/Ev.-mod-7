@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Realizar Transferencia</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <style>
+        /* Estilos para la tabla */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th,
+        td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        /* Estilos para los botones */
+        .boton {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-right: 10px;
+        }
+
+        /* Estilos para el formulario y la página */
+        .container {
+            max-width: 800px;
+            margin: auto;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .form-label {
+            font-weight: bold;
+        }
+
+        .mb-4 {
+            margin-bottom: 20px;
+        }
+
+        .text-danger {
+            font-size: 14px;
+        }
+
+        .btn-secondary {
+            background-color: #6c757d;
+            border-color: #6c757d;
+        }
+
+        .btn-secondary:hover {
+            background-color: #5a6268;
+            border-color: #545b62;
+        }
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light mb-4">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/">Ir a inicio</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
+                aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+                <a class="nav-link" href="#">Movimientos</a>
+                <a class="nav-link active" aria-current="page" href="/transferencia">Transferencias</a>
+                <a class="nav-link" href="/login">Cerrar Sesión</a>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<div class="container">
+    <h1>Realizar Transferencia</h1>
+
+    <form action="#" th:action="@{/transferencia}" method="post" class="mb-4">
+        <div class="mb-3">
+            <label for="cuentaRemisora" class="form-label">Selecciona la cuenta destino:</label>
+            <select id="cuentaRemisora" name="cuentaRemisora" class="form-select">
+                <option th:each="cuenta : ${cuentas}" th:value="${cuenta.numeroCuenta}"
+                        th:text="${cuenta.numeroCuenta + ' - Saldo: ' + cuenta.saldo}"></option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="monto" class="form-label">Monto:</label>
+            <input type="text" id="monto" name="monto" class="form-control" required>
+        </div>
+        <div class="mb-3">
+            <label for="destinatario" class="form-label">Selecciona el destinatario (email):</label>
+            <select id="destinatario" name="destinatario" class="form-select">
+                <option th:each="usuario : ${usuarios}" th:value="${usuario.email}"
+                        th:text="${usuario.email}"></option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Realizar Transferencia</button>
+    </form>
+
+    <p th:if="${error}" th:text="${error}" class="text-danger"></p>
+
+    <a href="/" class="btn btn-secondary">Regresar al Menú Principal</a>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
+        integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
+        integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
+        crossorigin="anonymous"></script>
+</body>
+</html>
